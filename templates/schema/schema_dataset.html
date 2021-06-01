@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mt-4">
+    <h3 class="d-inline">Data Sets of</h3>
+    <form id="dataSetCreate" class="row float-end" action="{{ data_sets.get_absolute_url }}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="col-auto">
+                <label for="{{ field.id_for_label }}" class="col-form-label">{{ field.label }}</label>
+            </div>
+            <div class="col-auto">
+                {{ field }}
+            </div>
+        {% endfor %}
+        <div class="col-auto">
+            <button id="dataSetSubmit" type="submit" class="btn btn-success">Generate data</button>
+        </div>
+    </form>
+</div>
+<table class="table table-bordered text-center mt-5">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Created</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data_set in data_sets %}
+            <tr>
+                <th class="align-middle" scope="row">
+                    {{ forloop.counter }}
+                </th>
+                <td class="align-middle">
+                    {{ data_set.created|date:"Y-m-d" }}
+                </td>
+                <td class="align-middle">
+                    {% if data_set.status == 'Processing' %}
+                        <div class="btn btn-danger taskStatus">{{ data_set.status }}</div>
+                    {% else %}
+                        <div class="btn btn-success taskStatus">{{ data_set.status }}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    <form id="getFile" action="{% url 'get_file' data_set.id %}" method="get">
+                        {% if data_set.status == 'Processing' %}
+                            <button class="btn btn-outline-warning disabled downloadButton" type="submit">Download</button>
+                        {% else %}
+                            <button class="btn btn-warning downloadButton" type="submit">Download</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+{% block script %}
+    <script>
+
+$("#dataSetCreate").submit(function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: `${this.action}`,
+        data: $(this).serialize()
+    })
+    .done((response) => {
+        $("#dataSetSubmit").prop("disabled", true);
+        $("tbody").append(
+            `
+            <tr>
+                <th class="align-middle" scope="row">
+                    ${response.count}
+                </th>
+                <td class="align-middle">
+                    ${response.created}
+                </td>
+                <td class="align-middle">
+                    <div class="btn btn-danger taskStatus">${response.status}</div>
+                </td>
+                <td>
+                    <form id="getFile" action="/schema/get_file/${response.dataset_id}/" method="get">
+                        <button class="btn btn-outline-warning disabled downloadButton" type="submit">Download</button>
+                    </form>
+                </td>
+            </tr>
+            `
+        )
+        getTaskStatus(response.task_id);
+    })
+    .fail((err) => {
+        return false;
+    })
+})
+function getTaskStatus(task_id) {
+    $.ajax({
+        type: "GET",
+        url: `/tasks/${task_id}/`
+    })
+    .done((response) => {
+        const taskStatus = response.task_status;
+        const taskID = response.task_id;
+        console.log(taskStatus)
+
+        switch (taskStatus) {
+            case "SUCCESS":
+                $(".taskStatus").last().attr("class", "btn btn-success taskStatus");
+                $(".taskStatus").last().html("Ready");
+                $(".downloadButton").last().attr("class", "btn btn-warning downloadButton");
+                $("#dataSetSubmit").prop("disabled", false);
+                $("#dataSetCreate")[0].reset();
+                break;
+
+            case "PENDING":
+                setTimeout(() => {
+                    getTaskStatus(taskID)
+                }, 1000);
+                break;
+
+            default:
+                return false;
+        }
+    })
+    .fail((err) => {
+        console.log(err);
+    })
+}
+    </script>
+{% endblock %}

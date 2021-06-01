@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row m-2">
+    <div class="col-sm-2 col-xs-12">
+        <h2 class="col">{{ schema.title }}</h2>
+        <a class="btn btn-outline-danger" href="{% url "delete" schema.id %}">Delete</a>
+        <a class="btn btn-outline-success" href="{% url "data-set" object.id %}">Data Set</a>
+    </div>
+
+    <div class="col-sm-8 col-xs-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Order</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Range</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for column in object.column_m_set.all|dictsort:"order"%}
+                    <tr>
+                        <td>{{column.order}}</td>
+                        <th scope="row">{{column.name}}</th>
+                        {% if column.from_int is None and column.to_int is None%}
+                        <td></td>
+                        {% else %}
+                        <td>from {{column.from_int}} to  {{column.to_int}}</td>
+                        {% endif %}
+                        <td>
+                            <a class="btn btn-outline-danger" href="{% url "column_delete" column.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    <a class="btn btn-primary m-1 float-left" href="{% url "column-create" object.id %}">Add Column new</a>
+    </div>
+    </div>
+{% endblock %}
