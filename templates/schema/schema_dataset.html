@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="mt-4">
-    <h3 class="d-inline">Data Sets of</h3>
+    <h3 class="d-inline">Data Sets</h3>
     <form id="dataSetCreate" class="row float-end" action="{{ data_sets.get_absolute_url }}" method="post">
         {% csrf_token %}
         {% for field in form %}

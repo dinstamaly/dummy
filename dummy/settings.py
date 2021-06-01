@@ -137,11 +137,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # celery
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_URL = 'redis://:p4bd048dd184cdc77f50810c062e32f7e1002ec0397a25cde223ee38027846671@ec2-3-215-237-226.compute-1.amazonaws.com:27110'
+# CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_ENABLE_UTC = False
 CELERY_TIMEZONE = "Asia/Bishkek"
 
 
