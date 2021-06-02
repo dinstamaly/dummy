@@ -148,10 +148,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # celery
 # os.environ.get('SECRET_KEY')
-BROKER_URL=os.environ['REDIS_URL'],
-CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
-# BROKER_URL='redis://:p22f425404dc3957c10592659161a878f78dc146fd03e8e7740cc0b9bb23131fa@ec2-52-6-122-229.compute-1.amazonaws.com:6659'
-# CELERY_RESULT_BACKEND='redis://:p22f425404dc3957c10592659161a878f78dc146fd03e8e7740cc0b9bb23131fa@ec2-52-6-122-229.compute-1.amazonaws.com:6659'
+# BROKER_URL=os.environ['REDIS_URL'],
+# CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+BROKER_URL='redis://localhost:6379'
+CELERY_RESULT_BACKEND='redis://localhost:6379'
 CELERY_TIMEZONE = "Asia/Bishkek"
 
 
