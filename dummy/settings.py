@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY='django-insecure-_-&+5^#74z4lg&e!ja$7h13x=0c$7n$$!^mksgj-h)p70u&3kh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,11 +78,14 @@ WSGI_APPLICATION = 'dummy.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'pq_user',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -143,8 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # celery
-CELERY_BROKER_URL = '    redis://:p5533304ec81f82a7c869b25ec54f3f1e53dabf901eac89fa5f52c02fab9af45c@ec2-35-153-151-182.compute-1.amazonaws.com:25670'
-CELERY_RESULT_BACKEND = '    redis://:p5533304ec81f82a7c869b25ec54f3f1e53dabf901eac89fa5f52c02fab9af45c@ec2-35-153-151-182.compute-1.amazonaws.com:25670'
+CELERY_BROKER_URL = 'redis://:p5533304ec81f82a7c869b25ec54f3f1e53dabf901eac89fa5f52c02fab9af45c@ec2-35-153-151-182.compute-1.amazonaws.com:25670'
+CELERY_RESULT_BACKEND = 'redis://:p5533304ec81f82a7c869b25ec54f3f1e53dabf901eac89fa5f52c02fab9af45c@ec2-35-153-151-182.compute-1.amazonaws.com:25670'
 CELERY_TIMEZONE = "Asia/Bishkek"
 
 
