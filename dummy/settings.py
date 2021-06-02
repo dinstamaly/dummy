@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY') 
 # SECRET_KEY='django-insecure-_-&+5^#74z4lg&e!ja$7h13x=0c$7n$$!^mksgj-h)p70u&3kh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['dummycelery.herokuapp.com']
 
@@ -148,11 +148,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # celery
 # os.environ.get('SECRET_KEY')
-BROKER_URL=os.environ['REDIS_URL'],
-CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
-# BROKER_URL='redis://localhost:6379'
+CELERY_BROKER_URL=os.environ['REDIS_URL']
 # CELERY_RESULT_BACKEND='redis://localhost:6379'
-CELERY_TIMEZONE = "Asia/Bishkek"
+CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+# CELERY_BROKER_URL='redis://:pa24fca9494a76b6a72c0f3511f67aa0f9ddd5ebdc6a603bd8eb371a823a75837@ec2-3-217-254-50.compute-1.amazonaws.com:21939'
+# CELERY_RESULT_BACKEND='redis://:pa24fca9494a76b6a72c0f3511f67aa0f9ddd5ebdc6a603bd8eb371a823a75837@ec2-3-217-254-50.compute-1.amazonaws.com:21939'
+# CELERY_TIMEZONE = "Asia/Bishkek"
 
 
 LOGIN_URL = 'login'

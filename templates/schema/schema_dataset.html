@@ -57,77 +57,77 @@
     </tbody>
 </table>
 {% endblock %}
-
 {% block script %}
     <script>
-        $("#dataSetCreate").submit(function (e) {
-            e.preventDefault();
 
-            $.ajax({
-                type: "POST",
-                url: `${this.action}`,
-                data: $(this).serialize()
-            })
-            .done((response) => {
-                $("#dataSetSubmit").prop("disabled", true);
-                $("tbody").append(
-                    `
-                    <tr>
-                        <th class="align-middle" scope="row">
-                            ${response.count}
-                        </th>
-                        <td class="align-middle">
-                            ${response.created}
-                        </td>
-                        <td class="align-middle">
-                            <div class="btn btn-danger taskStatus">${response.status}</div>
-                        </td>
-                        <td>
-                            <form id="getFile" action="/schema/get_file/${response.dataset_id}/" method="get">
-                                <button class="btn btn-outline-warning disabled downloadButton" type="submit">Download</button>
-                            </form>
-                        </td>
-                    </tr>
-                    `
-                )
-                getTaskStatus(response.task_id);
-            })
-            .fail((err) => {
+$("#dataSetCreate").submit(function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: `${this.action}`,
+        data: $(this).serialize()
+    })
+    .done((response) => {
+        $("#dataSetSubmit").prop("disabled", true);
+        $("tbody").append(
+            `
+            <tr>
+                <th class="align-middle" scope="row">
+                    ${response.count}
+                </th>
+                <td class="align-middle">
+                    ${response.created}
+                </td>
+                <td class="align-middle">
+                    <div class="btn btn-danger taskStatus">${response.status}</div>
+                </td>
+                <td>
+                    <form id="getFile" action="/schema/get_file/${response.dataset_id}/" method="get">
+                        <button class="btn btn-outline-warning disabled downloadButton" type="submit">Download</button>
+                    </form>
+                </td>
+            </tr>
+            `
+        )
+        getTaskStatus(response.task_id);
+    })
+    .fail((err) => {
+        return false;
+    })
+})
+function getTaskStatus(task_id) {
+    $.ajax({
+        type: "GET",
+        url: `/tasks/${task_id}/`
+    })
+    .done((response) => {
+        const taskStatus = response.task_status;
+        const taskID = response.task_id;
+        console.log(taskStatus)
+
+        switch (taskStatus) {
+            case "SUCCESS":
+                $(".taskStatus").last().attr("class", "btn btn-success taskStatus");
+                $(".taskStatus").last().html("Ready");
+                $(".downloadButton").last().attr("class", "btn btn-warning downloadButton");
+                $("#dataSetSubmit").prop("disabled", false);
+                $("#dataSetCreate")[0].reset();
+                break;
+
+            case "PENDING":
+                setTimeout(() => {
+                    getTaskStatus(taskID)
+                }, 1000);
+                break;
+
+            default:
                 return false;
-            })
-        })
-        function getTaskStatus(task_id) {
-            $.ajax({
-                type: "GET",
-                url: `/tasks/${task_id}/`
-            })
-            .done((response) => {
-                const taskStatus = response.task_status;
-                const taskID = response.task_id;
-                console.log(taskStatus)
-
-                switch (taskStatus) {
-                    case "SUCCESS":
-                        $(".taskStatus").last().attr("class", "btn btn-success taskStatus");
-                        $(".taskStatus").last().html("Ready");
-                        $(".downloadButton").last().attr("class", "btn btn-warning downloadButton");
-                        $("#dataSetSubmit").prop("disabled", false);
-                        $("#dataSetCreate")[0].reset();
-                        break;
-
-                    case "PENDING":
-                        setTimeout(() => {
-                            getTaskStatus(taskID)
-                        }, 1000);
-                        break;
-
-                    default:
-                        return false;
-                }
-            })
-            .fail((err) => {
-                console.log(err);
-            })
         }
+    })
+    .fail((err) => {
+        console.log(err);
+    })
+}
     </script>
 {% endblock %}
