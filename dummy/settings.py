@@ -134,10 +134,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
 STATIC_ROOT = 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'media'))
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -152,4 +153,3 @@ CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'
-# django_heroku.settings(locals())
