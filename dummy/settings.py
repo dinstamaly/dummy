@@ -134,11 +134,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-
 STATIC_ROOT = 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'media'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -146,17 +145,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# celery
-# os.environ.get('SECRET_KEY')
 CELERY_BROKER_URL=os.environ['REDIS_URL']
-# CELERY_RESULT_BACKEND='redis://localhost:6379'
 CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
-# CELERY_BROKER_URL='redis://:pa24fca9494a76b6a72c0f3511f67aa0f9ddd5ebdc6a603bd8eb371a823a75837@ec2-3-217-254-50.compute-1.amazonaws.com:21939'
-# CELERY_RESULT_BACKEND='redis://:pa24fca9494a76b6a72c0f3511f67aa0f9ddd5ebdc6a603bd8eb371a823a75837@ec2-3-217-254-50.compute-1.amazonaws.com:21939'
-# CELERY_TIMEZONE = "Asia/Bishkek"
 
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
