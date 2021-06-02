@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY='django-insecure-_-&+5^#74z4lg&e!ja$7h13x=0c$7n$$!^mksgj-h)p70u&3kh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -147,8 +148,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # celery
 # os.environ.get('SECRET_KEY')
-BROKER_URL=os.environ['REDIS_URL'],
-CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+# BROKER_URL=os.environ['REDIS_URL'],
+# CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+BROKER_URL=os.environ.get('REDIS_URL')
+CELERY_RESULT_BACKEND=os.environ.get('REDIS_URL')
 CELERY_TIMEZONE = "Asia/Bishkek"
 
 
