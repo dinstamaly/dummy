@@ -43,7 +43,7 @@ class Csv:
             Bucket=settings.AWS_STORAGE_BUCKET_NAME,
             Key=settings.AWS_STORAGE_BUCKET_NAME+'/mediafiles/' + filename,
             Body=csv.getvalue(),
-            # ACL='public',
+            ACL='public-read',
                           # Metadata={
                           #     'x-amz-meta-my-key': 'your-value'
                           # }
