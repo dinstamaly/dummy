@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'crispy_forms',
     'schemas',
 ]
@@ -129,16 +130,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-
+AWS_ACCESS_KEY_ID ='XMYGTMNXV6YI3OLFQWZ6'
+AWS_SECRET_ACCESS_KEY = 'asYrb4YKreO0jiybj6ecZkfXFrPNYBqG768m8OjyNPw'
+AWS_STORAGE_BUCKET_NAME = 'dummydummy'
+AWS_S3_CUSTOM_DOMAIN = '%s.nyc3.digitaloceanspaces.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_ENDPOINT_URL = 'https://dummydummy.nyc3.digitaloceanspaces.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, 'staticfiles')
+MEDIA_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + '/' + AWS_STORAGE_BUCKET_NAME + '/mediafiles/'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    os.path.join(BASE_DIR, 'static')
 ]
-
-STATIC_ROOT = 'staticfiles'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = MEDIA_URL
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

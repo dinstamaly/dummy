@@ -50,7 +50,7 @@ class DataSet(models.Model):
         max_length=50, default='Processing', choices=STATUS
     )
     created = models.DateField(auto_now_add=True, null=True)
-    file = models.FileField(upload_to='data_sets/', null=True)
+    file = models.FileField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.schema} - {self.num_row}'
