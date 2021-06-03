@@ -119,7 +119,9 @@ class SchemaView(LoginRequiredMixin, View):
                     schema_id=schema_id,
                     num_row=request.POST.get('num_row')
                 )
-                task = form_fake_data.delay(schema_id, data_set.id)
+                task = form_fake_data.delay(
+                    schema_id, data_set.num_row, data_set.id
+                )
 
                 response = {
                     'task_id': task.id,
