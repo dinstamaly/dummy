@@ -26,12 +26,7 @@ class Csv:
         df = pd.read_csv(text, sep=",", index_col=head[0])
         df.to_csv(csv)
         filename = f'result_{self.DataSet.id}.csv'
-        session = boto3.session.Session()  #
-        # session = boto3.Session(
-        #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-        #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-        #     region_name='nyc3',
-        # )
+        session = boto3.session.Session()
         client = session.client(
             's3',
             region_name='nyc3',
@@ -43,23 +38,14 @@ class Csv:
             Bucket=settings.AWS_STORAGE_BUCKET_NAME,
             Key=settings.AWS_STORAGE_BUCKET_NAME+'/mediafiles/' + filename,
             Body=csv.getvalue(),
-                          # Metadata={
-                          #     'x-amz-meta-my-key': 'your-value'
-                          # }
             )
         client.put_object_acl(
             ACL='public-read', Bucket=settings.AWS_STORAGE_BUCKET_NAME,
             Key=settings.AWS_STORAGE_BUCKET_NAME+'/mediafiles/' + filename,
         )
-        # s3 = session.resource('s3')
-        # obj = s3.Object(settings.AWS_STORAGE_BUCKET_NAME,
-        #                 'mediafiles/' + filename)
-        # print(obj)
-        # print(csv.getvalue())
-        # obj.put(Body=csv.getvalue(), Key='mediafiles/' + filename)
         url = settings.MEDIA_URL + filename
         self.DataSet.status = 'Ready'
-        self.DataSet.file = str(url)
+        self.DataSet.file = url
         self.DataSet.save()
         return str(url)
 
