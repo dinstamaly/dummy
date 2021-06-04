@@ -1,3 +1,4 @@
+from django import urls
 from celery.result import AsyncResult
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -159,4 +160,4 @@ class FileDownloadView(LoginRequiredMixin, View):
 
     def get(self, request, dataset_id):
         data_set = get_object_or_404(DataSet, id=dataset_id)
-        return FileResponse(open(data_set.file.file, 'rb'))
+        return FileResponse(open(str(data_set.file), 'rb'))
