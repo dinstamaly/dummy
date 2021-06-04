@@ -160,4 +160,5 @@ class FileDownloadView(LoginRequiredMixin, View):
 
     def get(self, request, dataset_id):
         data_set = get_object_or_404(DataSet, id=dataset_id)
-        return FileResponse(open(urls(data_set.file), 'rb'))
+        # return FileResponse(open(urls(data_set.file), 'rb'))
+        return FileResponse(data_set.file)
