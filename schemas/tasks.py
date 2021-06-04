@@ -13,4 +13,5 @@ def form_fake_data(schema, rows, pk):
     csv = Csv(schema, rows, pk)
 
     print(f'Task {pk} Done')
+    print(csv.data_gen())
     return csv.data_gen()

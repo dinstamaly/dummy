@@ -143,7 +143,7 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, 'staticfiles')
 MEDIA_URL = '%s/%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_STORAGE_BUCKET_NAME, 'mediafiles')
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-# DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
