@@ -45,13 +45,11 @@
                     {% endif %}
                 </td>
                 <td>
-                    <!-- <form id="getFile" action="{% url 'get_file' data_set.id %}" method="get"> -->
                         {% if data_set.status == 'Processing' %}
                             <a class="btn btn-outline-warning disabled downloadButton" type="submit">Download</a>
                         {% else %}
                             <a class="btn btn-warning downloadButton" id={{ data_set.pk }}  href="{{ data_set.file }}" download>Download</a>
                         {% endif %}
-                    <!-- </form> -->
                 </td>
             </tr>
         {% endfor %}
