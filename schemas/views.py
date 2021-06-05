@@ -66,41 +66,6 @@ class ColumnDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('detail', kwargs={'pk': schema.pk})
 
 
-# class DataList(ListView):
-#     model = DataSet
-#     template_name = 'schema/schema_dataset.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['schema'] = Schema.objects.get(pk=self.kwargs["pk"])
-#         return context
-
-
-# class DataCreateView(LoginRequiredMixin, CreateView):
-#     model = DataSet
-#     form_class = DataSetCreateForm
-#     template_name = 'schema/dataset_create.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['schema'] = Schema.objects.get(pk=self.kwargs["pk"])
-#         return context
-
-#     def form_valid(self, form):
-#         schema = Schema.objects.get(pk=self.kwargs["pk"])
-#         if schema:
-#             form.instance.schema = schema
-#             valid = super().form_valid(form)
-#             # task = form_fake_data.delay(
-# #                     schema_id, data_set.num_row, data_set.id
-# #                 )
-#             form_fake_data.delay(
-#                 schema.id, form.instance.num_row, form.instance.id
-#                 )
-#             return valid
-#         else:
-#             form.add_error('order', 'Error')
-
 class SchemaView(LoginRequiredMixin, View):
     def get(self, request, schema_id):
         schema = get_object_or_404(Schema, pk=schema_id, user=request.user)
@@ -149,17 +114,3 @@ class TaskStatusView(LoginRequiredMixin, View):
 
         else:
             return HttpResponseForbidden(status=403)
-
-
-# class FileDownloadView(LoginRequiredMixin, View):
-#     def get(self, request, schema_id):
-#         schema = get_object_or_404(Schema, pk=schema_id, user=request.user)
-#         data_sets = schema.dataset_set.all()
-#         form = DataSetCreateForm()
-#         context = {'schema': schema, 'data_sets': data_sets, 'form': form}
-#         return render(request, 'schema/schema_dataset.html', context)
-
-    # def get(self, request, dataset_id):
-    #     data_set = get_object_or_404(DataSet, id=dataset_id)
-    #     return (data_set.file)
-    #     return FileResponse(open(bytes(data_set.file), 'r'))
