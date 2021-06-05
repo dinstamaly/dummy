@@ -45,9 +45,9 @@
                 </td>
                 <td>
                          {% if data_set.status == 'Processing' %}
-                            <button class="btn btn-outline-warning disabled downloadButton" type="submit">Download</button>
+                            <a class="btn btn-outline-warning disabled downloadButton">Download</a>
                         {% else %}
-                            <a class="btn btn-warning downloadButton"  id={{data_set.pk}}  href="{{ data_set.url }}" download>Download</a>
+                            <a class="btn btn-warning downloadButton"  id={{data_set.pk}}  href="{{ data_set.file }}" download>Download</a>
                         {% endif %}
                 </td>
             </tr>
