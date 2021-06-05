@@ -128,8 +128,7 @@ class SchemaView(LoginRequiredMixin, View):
                     'count': schema.dataset_set.count(),
                     'dataset_id': data_set.id,
                     'created': data_set.created,
-                    'status': data_set.status,
-                    'file': data_set.file
+                    'status': data_set.status
                 }
 
                 return JsonResponse(response, status=202)
