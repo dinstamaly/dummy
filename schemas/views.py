@@ -133,10 +133,6 @@ class SchemaView(LoginRequiredMixin, View):
 
 
 class TaskStatusView(LoginRequiredMixin, View):
-    """
-    Realize Celery task status polling.
-    Recieve a GET AJAX request, check task status and send json data to front end.
-    """
     def get(self, request, task_id):
         if request.is_ajax():
             task_result = AsyncResult(task_id)
