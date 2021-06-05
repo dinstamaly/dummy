@@ -97,12 +97,6 @@ class ColumnDeleteView(LoginRequiredMixin, DeleteView):
 #             form.add_error('order', 'Error')
 
 class SchemaView(LoginRequiredMixin, View):
-    """
-    Responsible for schema detail and related datasets page.
-    Display datasets table and create dataset form.
-    Receive a POST AJAX request, create new dataset model,
-    start Celery task to form CSV file and send json data to front end.
-    """
     def get(self, request, schema_id):
         schema = get_object_or_404(Schema, pk=schema_id, user=request.user)
         data_sets = schema.dataset_set.all()
@@ -158,7 +152,7 @@ class TaskStatusView(LoginRequiredMixin, View):
 
 class FileDownloadView(LoginRequiredMixin, View):
 
-    def upload(self, request, dataset_id):
+    def get(self, request, dataset_id):
         data_set = get_object_or_404(DataSet, id=dataset_id)
-        return data_set.file
+        return (str(data_set.file))
         # return FileResponse(open(bytes(data_set.file), 'r'))
