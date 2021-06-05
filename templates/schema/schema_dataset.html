@@ -106,7 +106,8 @@ function getTaskStatus(task_id) {
     .done((response) => {
         const taskStatus = response.task_status;
         const taskID = response.task_id;
-        console.log(taskStatus)
+        const taskURL = response.task_file
+        console.log(taskURL)
 
         switch (taskStatus) {
             case "SUCCESS":

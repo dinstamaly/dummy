@@ -142,7 +142,8 @@ class TaskStatusView(LoginRequiredMixin, View):
             task_result = AsyncResult(task_id)
             result = {
                 "task_id": task_id,
-                "task_status": task_result.status
+                "task_status": task_result.status,
+                "task_file": task_result.file
             }
             return JsonResponse(result, status=202)
 
