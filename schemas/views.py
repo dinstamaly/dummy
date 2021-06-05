@@ -91,7 +91,12 @@ class DataCreateView(LoginRequiredMixin, CreateView):
         if schema:
             form.instance.schema = schema
             valid = super().form_valid(form)
-            form_fake_data.delay(schema.id, form.instance.id)
+            # task = form_fake_data.delay(
+#                     schema_id, data_set.num_row, data_set.id
+#                 )
+            form_fake_data.delay(
+                schema.id, form.instance.num_row, form.instance.id
+                )
             return valid
         else:
             form.add_error('order', 'Error')
