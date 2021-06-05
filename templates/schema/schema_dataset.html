@@ -48,7 +48,6 @@
                         {% if data_set.status == 'Processing' %}
                             <button class="btn btn-outline-warning disabled downloadButton" type="submit">Download</button>
                         {% else %}
-                            {{data_set.file}}
                             <button class="btn btn-warning downloadButton" type="submit">Download</button>
                         {% endif %}
                     </form>

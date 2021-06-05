@@ -124,7 +124,6 @@ class SchemaView(LoginRequiredMixin, View):
                     'dataset_id': data_set.id,
                     'created': data_set.created,
                     'status': data_set.status,
-                    'file': data_set.file,
                 }
 
                 return JsonResponse(response, status=202)
