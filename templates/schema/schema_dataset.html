@@ -44,13 +44,11 @@
                     {% endif %}
                 </td>
                 <td>
-                    <form id="getFile" action="{% url 'get_file' data_set.id %}" method="post">
-                        {% if data_set.status == 'Processing' %}
+                         {% if data_set.status == 'Processing' %}
                             <button class="btn btn-outline-warning disabled downloadButton" type="submit">Download</button>
                         {% else %}
-                            <button class="btn btn-warning downloadButton" type="submit">Download</button>
+                            <a class="btn btn-warning downloadButton"  id={{data_set.pk}}  href="{{ data_set.url }}" download>Download</a>
                         {% endif %}
-                    </form>
                 </td>
             </tr>
         {% endfor %}
@@ -85,11 +83,9 @@ $("#dataSetCreate").submit(function (e) {
                     <div class="btn btn-danger taskStatus">${response.status}</div>
                 </td>
                 <td>
-                    <form id="getFile" action="/schema/get_file/${response.dataset_id}/" method="get">
                         <button
                             class="btn btn-outline-warning disabled downloadButton"
                             type="submit">Download</button>
-                    </form>
                 </td>
             </tr>
             `
@@ -101,7 +97,6 @@ $("#dataSetCreate").submit(function (e) {
     })
 })
 
-// Send AJAX request to backend to check CSV file creation task status
 function getTaskStatus(task_id) {
     $.ajax({
         type: "GET",

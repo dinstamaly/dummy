@@ -152,9 +152,15 @@ class TaskStatusView(LoginRequiredMixin, View):
             return HttpResponseForbidden(status=403)
 
 
-class FileDownloadView(LoginRequiredMixin, View):
+# class FileDownloadView(LoginRequiredMixin, View):
+#     def get(self, request, schema_id):
+#         schema = get_object_or_404(Schema, pk=schema_id, user=request.user)
+#         data_sets = schema.dataset_set.all()
+#         form = DataSetCreateForm()
+#         context = {'schema': schema, 'data_sets': data_sets, 'form': form}
+#         return render(request, 'schema/schema_dataset.html', context)
 
-    def get(self, request, dataset_id):
-        data_set = get_object_or_404(DataSet, id=dataset_id)
-        return (data_set.file)
-        return FileResponse(open(bytes(data_set.file), 'r'))
+    # def get(self, request, dataset_id):
+    #     data_set = get_object_or_404(DataSet, id=dataset_id)
+    #     return (data_set.file)
+    #     return FileResponse(open(bytes(data_set.file), 'r'))
