@@ -56,5 +56,5 @@ class DataSet(models.Model):
         return f'{self.schema} - {self.num_row}'
 
     def get_absolute_url(self):
-        return reverse('data-set', kwargs={'pk': self.schema.pk})
+        return reverse('data-set', kwargs={'pk': self.pk})
 
